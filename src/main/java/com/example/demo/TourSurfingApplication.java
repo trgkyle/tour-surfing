@@ -14,6 +14,8 @@ public class TourSurfingApplication {
 	}
 	@GetMapping
 	public String hello(){
+		Selenium sl = new Selenium();
+		sl.init();
 		return "Hello world";
 	}
 }
