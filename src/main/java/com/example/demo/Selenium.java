@@ -11,11 +11,11 @@ import java.time.Duration;
 public class Selenium {
 
     public void init() {
-        System.out.println("Hello");
+        System.out.println("Helloo");
         WebDriver driver = new ChromeDriver();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds());
         try {
-            driver.get("https://facebook.com");
+            driver.get("https://facebook.comm");
             driver.findElement(By.name("q")).sendKeys("cheese" + Keys.ENTER);
             WebElement firstResult = wait.until(presenceOfElementLocated(By.cssSelector("h3>div")));
             System.out.println(firstResult.getAttribute("textContent"));
