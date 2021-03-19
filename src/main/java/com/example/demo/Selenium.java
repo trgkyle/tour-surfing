@@ -10,17 +10,19 @@ import java.time.Duration;
 
 public class Selenium {
 
-    public void init() {
-        System.out.println("Helloo");
+    public WebDriver init(String website) {
         WebDriver driver = new ChromeDriver();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds());
         try {
-            driver.get("https://facebook.comm");
-            driver.findElement(By.name("q")).sendKeys("cheese" + Keys.ENTER);
-            WebElement firstResult = wait.until(presenceOfElementLocated(By.cssSelector("h3>div")));
-            System.out.println(firstResult.getAttribute("textContent"));
-        } finally {
+            driver.get(website);
+//            driver.findElement(By.name("q")).sendKeys("cheese" + Keys.ENTER);
+//            WebElement firstResult = wait.until(presenceOfElementLocated(By.cssSelector("h3>div")));
+//            System.out.println(firstResult.getAttribute("textContent"));
+        }catch(Exception e){
+            System.out.println("Error & Quit out");
             driver.quit();
+        } finally {
+            return driver;
         }
     }
 }
