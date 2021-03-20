@@ -1,26 +1,51 @@
 package com.example.demo.FacebookCrawl;
 
 import com.example.demo.Selenium;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.openqa.selenium.*;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Facebook {
-    WebDriver wd;
-    WebElement we;
+    public WebDriver wd;
+    private WebElement we;
+    private Selenium sl = new Selenium();
     public Facebook() {
-        Selenium sl = new Selenium();
-        this.wd = sl.init("https://facebook.com");
+        this.wd = sl.init("https://facebook.com","");
     }
-    public WebDriver normalLogin(String username,String password) {
+    public Facebook(String cookies) {
+        this.wd = sl.init("https://facebook.com",cookies);
+    }
+    public void goGroup() {
+        wd.get("https://www.facebook.com/groups/1668792886550957");
+        this.crawlTourStatus(4);
+//        https://www.facebook.com/groups/1668792886550957
+
+    }
+    public void crawlTourStatus(int length){
+        List<WebElement> listTourStatus = null;
         try {
-            wd.findElement(By.id("email")).sendKeys(username);
-            wd.findElement(By.id("pass")).sendKeys(password);
-            wd.findElement(By.cssSelector("button[name=\"login\"]")).click();
+            do {
+                listTourStatus = wd.findElements(By.cssSelector("div[role=\"feed\"] > div > div> div> div > div[role=\"article\"]"));
+                JavascriptExecutor js = ((JavascriptExecutor) wd);
+                js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+                Thread.sleep(3000);
+            } while (listTourStatus.size() < length);
         }catch(Exception e){
-            System.out.println("Error");
+            System.out.println("Error get feed");
         }
-        return this.wd;
+        for(WebElement tourStatus : listTourStatus){
+            System.out.println(tourStatus);
+            List<WebElement> imagesTag = tourStatus.findElements(By.cssSelector("img"));
+            List<String> imagesLink = imagesTag.stream().map(s -> s.getAttribute("src")).collect(Collectors.toList());
+            System.out.println(imagesLink);
+
+
+        }
     }
 
 }
