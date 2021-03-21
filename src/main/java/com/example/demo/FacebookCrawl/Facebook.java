@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class Facebook {
 //        https://www.facebook.com/groups/1668792886550957
 
     }
-    public void crawlTourStatus(int length){
+    public void crawlTourStatus(int length) {
         List<WebElement> listTourStatus = null;
         try {
             do {
@@ -40,11 +41,28 @@ public class Facebook {
         }
         for(WebElement tourStatus : listTourStatus){
             System.out.println(tourStatus);
-            List<WebElement> imagesTag = tourStatus.findElements(By.cssSelector("img"));
-            List<String> imagesLink = imagesTag.stream().map(s -> s.getAttribute("src")).collect(Collectors.toList());
-            System.out.println(imagesLink);
+            try {
+                // feed source
+                WebElement feedTag = tourStatus.findElement(By.cssSelector("div[data-ad-preview=\"message\"]"));
+                System.out.println(feedTag.getAttribute("innerHTML"));
+                // image source
+                List<WebElement> imagesTag = tourStatus.findElements(By.cssSelector("img"));
+                List<String> imagesLink = imagesTag.stream().map(s -> s.getAttribute("src")).collect(Collectors.toList());
+                System.out.println(imagesLink);
 
-
+                // author link
+                WebElement authorTag = tourStatus.findElement(By.cssSelector("span > div > a[role=\"link\"][tabindex=\"0\"]"));
+                System.out.println(authorTag.getAttribute("href"));
+                // post link
+                WebElement linkTag = tourStatus.findElement(By.cssSelector("span > span > span > a[role=\"link\"][tabindex=\"0\"]"));
+                Actions builder = new Actions(wd);
+                Actions hoverOverRegistrar = builder.moveToElement(linkTag);
+                hoverOverRegistrar.perform();
+                Thread.sleep(3000);
+                System.out.println(linkTag.getAttribute("href"));
+            }catch(Exception e){
+                System.out.println("Error ");
+            }
         }
     }
 
