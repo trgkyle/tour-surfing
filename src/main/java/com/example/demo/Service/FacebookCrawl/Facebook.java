@@ -1,14 +1,10 @@
-package com.example.demo.FacebookCrawl;
+package com.example.demo.Service.FacebookCrawl;
 
 import com.example.demo.Selenium;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Facebook {

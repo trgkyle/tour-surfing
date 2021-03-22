@@ -1,4 +1,4 @@
-package com.example.demo.FacebookCrawl;
+package com.example.demo.Service.FacebookCrawl;
 
 import com.example.demo.Selenium;
 import org.openqa.selenium.By;

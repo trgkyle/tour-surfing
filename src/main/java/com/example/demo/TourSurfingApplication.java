@@ -1,16 +1,10 @@
 package com.example.demo;
 
-import com.example.demo.FacebookCrawl.Facebook;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.demo.Service.FacebookCrawl.Facebook;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.openqa.selenium.Cookie;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 @SpringBootApplication
 @RestController

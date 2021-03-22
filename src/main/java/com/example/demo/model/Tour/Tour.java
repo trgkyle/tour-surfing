@@ -1,4 +1,4 @@
-package com.example.demo.Tour;
+package com.example.demo.model.Tour;
 
 import java.util.Date;
 
