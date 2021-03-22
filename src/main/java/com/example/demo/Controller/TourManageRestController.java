@@ -1,12 +1,34 @@
 package com.example.demo.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.Entity.Tour;
+import com.example.demo.Service.Tour.TourService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.util.List;
+
+@RestController()
+//@RequestMapping(path = "tour-manage")
 public class TourManageRestController {
-    @GetMapping("/tour-manage")
-    public String test() {
-        return "Hello world!!";
+    private final TourService tourService;
+
+    @Autowired
+    public TourManageRestController(TourService tourService){
+        this.tourService = tourService;
+    }
+
+    @GetMapping("/tours-active")
+    public List<Tour> getTourActive() {
+        return tourService.getToursActive();
+    }
+    @GetMapping("/tours-pending")
+    public List<Tour> getTourPending() {
+        return tourService.getToursPending();
+    }
+
+    @PostMapping(value = "/censor-tour")
+    public Boolean censorTour(@RequestParam("status") Boolean status,@RequestParam("tourID") Long tourID) {
+        return tourService.censorTour(tourID,status);
     }
 }

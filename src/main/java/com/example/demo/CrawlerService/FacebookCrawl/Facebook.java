@@ -20,13 +20,13 @@ public class Facebook {
     public Facebook(String cookies) {
         this.wd = sl.init("https://facebook.com",cookies);
     }
-    public List<Tour> crawlGroup() {
+    public List<Tour> crawlGroup(Long tourLength) {
         wd.get("https://www.facebook.com/groups/1668792886550957");
 //        https://www.facebook.com/groups/1668792886550957
-        return this.crawlTourStatus(4);
+        return this.crawlTourStatus(tourLength);
 
     }
-    public List<Tour> crawlTourStatus(int length) {
+    public List<Tour> crawlTourStatus(Long length) {
         List<Tour> tourCollect = new ArrayList<Tour>();
         List<WebElement> listTourStatus = null;
         try {
@@ -42,11 +42,18 @@ public class Facebook {
         for(WebElement tourStatus : listTourStatus){
             System.out.println(tourStatus);
             try {
+
                 // feed source
                 WebElement feedTag = tourStatus.findElement(By.cssSelector("div[data-ad-preview=\"message\"]"));
+                try {
+                    WebElement seeMoreTag = feedTag.findElement(By.cssSelector("div[role=\"button\"][tabindex=\"0\"]"));
+                    seeMoreTag.click();
+                }catch(Exception e){
+                    System.out.println("No see more");
+                }
                 System.out.println(feedTag.getAttribute("innerHTML"));
                 // image source
-                List<WebElement> imagesTag = tourStatus.findElements(By.cssSelector("img"));
+                List<WebElement> imagesTag = tourStatus.findElements(By.cssSelector("img[referrerpolicy=\"origin-when-cross-origin\"]"));
                 List<String> imagesLink = imagesTag.stream().map(s -> s.getAttribute("src")).collect(Collectors.toList());
                 System.out.println(imagesLink);
 
@@ -60,7 +67,7 @@ public class Facebook {
                 hoverOverRegistrar.perform();
                 Thread.sleep(3000);
                 System.out.println(linkTag.getAttribute("href"));
-                tourCollect.add(new Tour(" ",feedTag.getAttribute("innerHTML"),0, new Date()," ",new HashSet<String>(imagesLink),authorTag.getAttribute("href"), linkTag.getAttribute("href")));
+                tourCollect.add(new Tour(null," ",feedTag.getAttribute("innerHTML"),0, new Date(),"FacebookGroup"," ",false, false,new HashSet<String>(imagesLink),authorTag.getAttribute("href"), linkTag.getAttribute("href")));
             }catch(Exception e){
                 System.out.println("Error ");
             }

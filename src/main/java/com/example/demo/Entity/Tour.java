@@ -14,42 +14,12 @@ public class Tour {
     @Column(columnDefinition="TEXT")
     public String des;
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public long price;
-    public Date time_from;
-    public String time_count;
-
-    @ElementCollection
-    @Column(columnDefinition="TEXT")
-    public Set<String> image;
-
-    @Column(columnDefinition="TEXT")
-    public String author;
-
-    @Column(columnDefinition="TEXT")
-    public String link;
-
-    public Tour(String title, String des, long price, Date time_from, String time_count, Set<String> image, String author, String link) {
-//        this.id = id;
-        this.title = title;
-        this.des = des;
-        this.price = price;
-        this.time_from = time_from;
-        this.time_count = time_count;
-        this.image = image;
-        this.author = author;
-        this.link = link;
-    }
-
     public Tour() {
 
+    }
+
+    public String getPlatform() {
+        return platform;
     }
 
     @Override
@@ -60,11 +30,78 @@ public class Tour {
                 ", des='" + des + '\'' +
                 ", price=" + price +
                 ", time_from=" + time_from +
+                ", platform='" + platform + '\'' +
                 ", time_count='" + time_count + '\'' +
+                ", censor=" + censor +
+                ", publish=" + publish +
                 ", image=" + image +
                 ", author='" + author + '\'' +
+                ", link='" + link + '\'' +
                 '}';
     }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public long price;
+    public Date time_from;
+    public String platform;
+
+    public Tour(Long id, String title, String des, long price, Date time_from, String platform, String time_count, Boolean censor, Boolean publish, Set<String> image, String author, String link) {
+        this.id = id;
+        this.title = title;
+        this.des = des;
+        this.price = price;
+        this.time_from = time_from;
+        this.platform = platform;
+        this.time_count = time_count;
+        this.censor = censor;
+        this.publish = publish;
+        this.image = image;
+        this.author = author;
+        this.link = link;
+    }
+
+    public String time_count;
+
+    public Boolean getCensor() {
+        return censor;
+    }
+
+    public void setCensor(Boolean censor) {
+        this.censor = censor;
+    }
+
+    public Boolean getPublish() {
+        return publish;
+    }
+
+    public void setPublish(Boolean publish) {
+        this.publish = publish;
+    }
+
+    public Boolean censor;
+
+    public Boolean publish;
+    @ElementCollection
+    @Column(columnDefinition="TEXT")
+    public Set<String> image;
+
+    @Column(columnDefinition="TEXT")
+    public String author;
+
+    @Column(columnDefinition="TEXT")
+    public String link;
+
 
     public void setId(Long id) {
         this.id = id;

@@ -17,18 +17,34 @@ public class TourService {
         this.tourRes = tourRes;
     }
 
-    public Boolean insertTour() {
-        String[] testString = {"hello","hi"};
-        Tour newTour = new Tour(" "," ",0,new Date()," ",new HashSet<String>(Arrays.asList(testString))," "," ");
-        tourRes.save(newTour);
-        return true;
+    public Boolean censorTour(Long tourID,Boolean status){
+        try {
+            Tour tour = this.tourRes.getOne(tourID);
+            tour.setCensor(true);
+            tour.setPublish(status);
+            tourRes.save(tour);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+    public List<Tour> getTours() {
+        return this.tourRes.findAll();
     }
 
-    public Boolean crawlFacebookTourPost() {
+    public List<Tour> getToursActive() {
+        return this.tourRes.getToursActive();
+    }
+
+    public List<Tour> getToursPending() {
+        return this.tourRes.getToursPending();
+    }
+
+    public Boolean crawlFacebookTourPost(Long tourLength) {
         Facebook fb = new Facebook("[{\"name\":\"datr\",\"value\":\"sexVYO1bzCfC-IPyiL7RLgRg\",\"path\":\"/\",\"domain\":\".facebook.com\",\"expiry\":1679315890000,\"secure\":true,\"httpOnly\":true},{\"name\":\"c_user\",\"value\":\"100004960057193\",\"path\":\"/\",\"domain\":\".facebook.com\",\"expiry\":1647779906000,\"secure\":true,\"httpOnly\":false},{\"name\":\"spin\",\"value\":\"r.1003486059_b.trunk_t.1616243909_s.1_v.2_\",\"path\":\"/\",\"domain\":\".facebook.com\",\"expiry\":1616333909000,\"secure\":true,\"httpOnly\":true},{\"name\":\"xs\",\"value\":\"29%3A8iE9V4xxT_mtkg%3A2%3A1616243909%3A10982%3A6337\",\"path\":\"/\",\"domain\":\".facebook.com\",\"expiry\":1647779906000,\"secure\":true,\"httpOnly\":true},{\"name\":\"fr\",\"value\":\"1QfHtZsqBcqywFJOE.AWXBc29gJUBP4uapa9-MFKBv3yY.BgVeyx.6g.AAA.0.0.BgVezD.AWUx5D9o8Ds\",\"path\":\"/\",\"domain\":\".facebook.com\",\"expiry\":1624019903000,\"secure\":true,\"httpOnly\":true},{\"name\":\"locale\",\"value\":\"en_US\",\"path\":\"/\",\"domain\":\".facebook.com\",\"expiry\":1616848691000,\"secure\":true,\"httpOnly\":false},{\"name\":\"wd\",\"value\":\"1200x835\",\"path\":\"/\",\"domain\":\".facebook.com\",\"expiry\":1616848706000,\"secure\":true,\"httpOnly\":false},{\"name\":\"sb\",\"value\":\"sexVYOZbIGaiFJyOvHaPAPWc\",\"path\":\"/\",\"domain\":\".facebook.com\",\"expiry\":1679315909000,\"secure\":true,\"httpOnly\":true}]");
 //		Facebook fb2 = new Facebook();
 //		fb2.normalLogin("s2hdpks22@gmail.com", "dkm01282046434");
-        List<Tour> tourCollect = fb.crawlGroup();
+        List<Tour> tourCollect = fb.crawlGroup(tourLength);
         for (Tour tour : tourCollect) {
             try {
                 tourRes.save(tour);
@@ -40,7 +56,7 @@ public class TourService {
     }
     public Boolean addToNewTour(String title, String des, long price, Date time_from, String time_count, List<String> image,String author, String link) {
         try {
-            Tour tourEntity = new Tour(title, des, price, time_from, time_count, new HashSet<String>(image), author, link);
+            Tour tourEntity = new Tour(null,title, des, price, time_from, time_count,false, false, new HashSet<String>(image), author, link);
             tourRes.save(tourEntity);
             return true;
         }catch(Exception e){
