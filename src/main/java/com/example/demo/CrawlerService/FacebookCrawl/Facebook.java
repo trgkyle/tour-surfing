@@ -1,29 +1,33 @@
-package com.example.demo.Service.FacebookCrawl;
+package com.example.demo.CrawlerService.FacebookCrawl;
 
-import com.example.demo.Selenium;
+import com.example.demo.Entity.Tour;
+import com.example.demo.Service.Selenium.Selenium;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Facebook {
     public WebDriver wd;
-    private WebElement we;
-    private Selenium sl = new Selenium();
+    private final Selenium sl = new Selenium();
     public Facebook() {
         this.wd = sl.init("https://facebook.com","");
     }
     public Facebook(String cookies) {
         this.wd = sl.init("https://facebook.com",cookies);
     }
-    public void goGroup() {
+    public List<Tour> crawlGroup() {
         wd.get("https://www.facebook.com/groups/1668792886550957");
-        this.crawlTourStatus(4);
 //        https://www.facebook.com/groups/1668792886550957
+        return this.crawlTourStatus(4);
 
     }
-    public void crawlTourStatus(int length) {
+    public List<Tour> crawlTourStatus(int length) {
+        List<Tour> tourCollect = new ArrayList<Tour>();
         List<WebElement> listTourStatus = null;
         try {
             do {
@@ -56,10 +60,12 @@ public class Facebook {
                 hoverOverRegistrar.perform();
                 Thread.sleep(3000);
                 System.out.println(linkTag.getAttribute("href"));
+                tourCollect.add(new Tour(" ",feedTag.getAttribute("innerHTML"),0, new Date()," ",new HashSet<String>(imagesLink),authorTag.getAttribute("href"), linkTag.getAttribute("href")));
             }catch(Exception e){
                 System.out.println("Error ");
             }
         }
+        return tourCollect;
     }
 
 }

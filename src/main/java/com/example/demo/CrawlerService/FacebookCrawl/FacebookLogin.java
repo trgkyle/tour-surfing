@@ -1,6 +1,6 @@
-package com.example.demo.Service.FacebookCrawl;
+package com.example.demo.CrawlerService.FacebookCrawl;
 
-import com.example.demo.Selenium;
+import com.example.demo.Service.Selenium.Selenium;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

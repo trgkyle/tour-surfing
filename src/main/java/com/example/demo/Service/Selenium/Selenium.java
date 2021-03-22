@@ -1,5 +1,4 @@
-package com.example.demo;
-import com.fasterxml.jackson.core.type.TypeReference;
+package com.example.demo.Service.Selenium;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.*;
@@ -7,9 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import java.time.Duration;
-import java.time.Instant;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Set;

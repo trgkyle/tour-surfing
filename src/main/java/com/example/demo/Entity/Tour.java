@@ -10,14 +10,44 @@ public class Tour {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+    @Column(length = 2000)
     public String title;
+    @Column(length = 200000)
     public String des;
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public long price;
     public Date time_from;
     public String time_count;
+
     @ElementCollection
+    @Column(length = 10000)
     public Set<String> image;
+
+    @Column(length = 10000)
     public String author;
+
+    @Column(length = 10000)
+    public String link;
+
+    public Tour(String title, String des, long price, Date time_from, String time_count, Set<String> image, String author, String link) {
+//        this.id = id;
+        this.title = title;
+        this.des = des;
+        this.price = price;
+        this.time_from = time_from;
+        this.time_count = time_count;
+        this.image = image;
+        this.author = author;
+        this.link = link;
+    }
 
     public Tour() {
 
@@ -101,14 +131,4 @@ public class Tour {
         return author;
     }
 
-    public Tour(Long id, String title, String des, long price, Date time_from, String time_count, Set<String> image, String author) {
-        this.id = id;
-        this.title = title;
-        this.des = des;
-        this.price = price;
-        this.time_from = time_from;
-        this.time_count = time_count;
-        this.image = image;
-        this.author = author;
-    }
 };
