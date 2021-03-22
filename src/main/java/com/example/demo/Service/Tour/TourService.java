@@ -54,13 +54,4 @@ public class TourService {
         }
         return true;
     }
-    public Boolean addToNewTour(String title, String des, long price, Date time_from, String time_count, List<String> image,String author, String link) {
-        try {
-            Tour tourEntity = new Tour(null,title, des, price, time_from, time_count,false, false, new HashSet<String>(image), author, link);
-            tourRes.save(tourEntity);
-            return true;
-        }catch(Exception e){
-            return false;
-        }
-    }
 }
