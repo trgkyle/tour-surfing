@@ -10,9 +10,8 @@ public class Tour {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    @Column(length = 2000)
     public String title;
-    @Column(length = 200000)
+    @Column(columnDefinition="TEXT")
     public String des;
 
     public String getLink() {
@@ -28,13 +27,13 @@ public class Tour {
     public String time_count;
 
     @ElementCollection
-    @Column(length = 10000)
+    @Column(columnDefinition="TEXT")
     public Set<String> image;
 
-    @Column(length = 10000)
+    @Column(columnDefinition="TEXT")
     public String author;
 
-    @Column(length = 10000)
+    @Column(columnDefinition="TEXT")
     public String link;
 
     public Tour(String title, String des, long price, Date time_from, String time_count, Set<String> image, String author, String link) {
