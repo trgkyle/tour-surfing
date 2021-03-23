@@ -26,6 +26,9 @@ public class Facebook {
         return this.crawlTourStatus(tourLength);
 
     }
+    public void quit() {
+        this.wd.quit();
+    }
     public List<Tour> crawlTourStatus(Long length) {
         List<Tour> tourCollect = new ArrayList<Tour>();
         List<WebElement> listTourStatus = null;
@@ -53,7 +56,7 @@ public class Facebook {
                 }
                 System.out.println(feedTag.getAttribute("innerHTML"));
                 // image source
-                List<WebElement> imagesTag = tourStatus.findElements(By.cssSelector("img[referrerpolicy=\"origin-when-cross-origin\"]"));
+                List<WebElement> imagesTag = tourStatus.findElements(By.cssSelector("a[role=\"link\"][tabindex=\"0\"] > div > div > div > img[referrerpolicy=\"origin-when-cross-origin\"]"));
                 List<String> imagesLink = imagesTag.stream().map(s -> s.getAttribute("src")).collect(Collectors.toList());
                 System.out.println(imagesLink);
 

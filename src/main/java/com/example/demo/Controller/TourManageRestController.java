@@ -18,10 +18,13 @@ public class TourManageRestController {
         this.tourService = tourService;
     }
 
+    @CrossOrigin
     @GetMapping("/tours-active")
     public List<Tour> getTourActive() {
         return tourService.getToursActive();
     }
+
+    @CrossOrigin
     @GetMapping("/tours-pending")
     public List<Tour> getTourPending() {
         return tourService.getToursPending();

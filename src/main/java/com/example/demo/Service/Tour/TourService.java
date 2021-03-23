@@ -52,6 +52,7 @@ public class TourService {
                 System.out.println("Error save");
             }
         }
+        fb.quit();
         return true;
     }
 }
