@@ -1,5 +1,6 @@
 package com.example.demo.Service.Tour;
 
+import com.example.demo.CrawlerService.ChototCrawl.Chotot;
 import com.example.demo.CrawlerService.FacebookCrawl.Facebook;
 import com.example.demo.Entity.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,19 @@ public class TourService {
             }
         }
         fb.quit();
+        return true;
+    }
+
+    public Boolean crawlChototTourPost(Long tourLength) {
+        Chotot ct = new Chotot();
+        List<Tour> tourCollect = ct.getTour(tourLength);
+        for (Tour tour : tourCollect) {
+            try {
+                tourRes.save(tour);
+            }catch(Exception e){
+                System.out.println("Error save");
+            }
+        }
         return true;
     }
 }

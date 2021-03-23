@@ -23,4 +23,10 @@ public class SystemConfigRestController {
     public Boolean activeFacebookCrawler(@RequestParam("crawlerLength") Long crawlerLength) {
         return this.tourService.crawlFacebookTourPost(crawlerLength);
     }
+
+    @CrossOrigin
+    @GetMapping("/chotot-crawler-active")
+    public Boolean activeChototCrawler(@RequestParam("crawlerLength") Long crawlerLength) {
+        return this.tourService.crawlChototTourPost(crawlerLength);
+    }
 }

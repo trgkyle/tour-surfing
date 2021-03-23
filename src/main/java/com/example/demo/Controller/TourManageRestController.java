@@ -30,6 +30,7 @@ public class TourManageRestController {
         return tourService.getToursPending();
     }
 
+    @CrossOrigin
     @PostMapping(value = "/censor-tour")
     public Boolean censorTour(@RequestParam("status") Boolean status,@RequestParam("tourID") Long tourID) {
         return tourService.censorTour(tourID,status);
