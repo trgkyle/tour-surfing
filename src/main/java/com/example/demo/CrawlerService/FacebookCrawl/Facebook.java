@@ -51,12 +51,13 @@ public class Facebook {
                 try {
                     WebElement seeMoreTag = feedTag.findElement(By.cssSelector("div[role=\"button\"][tabindex=\"0\"]"));
                     seeMoreTag.click();
+                    Thread.sleep(3000);
                 }catch(Exception e){
                     System.out.println("No see more");
                 }
                 System.out.println(feedTag.getAttribute("innerHTML"));
                 // image source
-                List<WebElement> imagesTag = tourStatus.findElements(By.cssSelector("a[role=\"link\"][tabindex=\"0\"] > div > div > div > img[referrerpolicy=\"origin-when-cross-origin\"]"));
+                List<WebElement> imagesTag = tourStatus.findElements(By.cssSelector("a[role=\"link\"][tabindex=\"0\"] img[referrerpolicy=\"origin-when-cross-origin\"]"));
                 List<String> imagesLink = imagesTag.stream().map(s -> s.getAttribute("src")).collect(Collectors.toList());
                 System.out.println(imagesLink);
 
