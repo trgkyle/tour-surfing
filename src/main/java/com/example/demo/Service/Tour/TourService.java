@@ -2,6 +2,7 @@ package com.example.demo.Service.Tour;
 
 import com.example.demo.CrawlerService.ChototCrawl.Chotot;
 import com.example.demo.CrawlerService.FacebookCrawl.Facebook;
+import com.example.demo.CrawlerService.TravelComCrawler.TravelCom;
 import com.example.demo.Entity.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -60,6 +61,19 @@ public class TourService {
     public Boolean crawlChototTourPost(Long tourLength) {
         Chotot ct = new Chotot();
         List<Tour> tourCollect = ct.getTour(tourLength);
+        for (Tour tour : tourCollect) {
+            try {
+                tourRes.save(tour);
+            }catch(Exception e){
+                System.out.println("Error save");
+            }
+        }
+        return true;
+    }
+
+    public Boolean crawlTravelComTourPost(Long tourLength) {
+        TravelCom tvc = new TravelCom();
+        List<Tour> tourCollect = tvc.getTour(tourLength);
         for (Tour tour : tourCollect) {
             try {
                 tourRes.save(tour);

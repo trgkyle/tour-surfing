@@ -29,4 +29,10 @@ public class SystemConfigRestController {
     public Boolean activeChototCrawler(@RequestParam("crawlerLength") Long crawlerLength) {
         return this.tourService.crawlChototTourPost(crawlerLength);
     }
+
+    @CrossOrigin
+    @GetMapping("/travelcom-crawler-active")
+    public Boolean activeTravelComCrawler(@RequestParam("crawlerLength") Long crawlerLength) {
+        return this.tourService.crawlTravelComTourPost(crawlerLength);
+    }
 }
